@@ -1,19 +1,12 @@
-
--- Glooptest "rare" metals
+local modpath = minetest.get_modpath(minetest.get_current_modname())
+dofile(modpath.."/glooptest.lua")
 
 local metals = {
-  akalin = "glooptest:akalin_ingot",
-  alatro = "glooptest:alatro_ingot",
-  arol = "glooptest:arol_ingot",
-  talinite = "glooptest:talinite_ingot"
+  akalin    = "goops_exchange:akalin_ingot",
+  alatro    = "goops_exchange:alatro_ingot",
+  arol      = "goops_exchange:arol_ingot",
+  talinite  = "goops_exchange:talinite_ingot"
 }
-
-for m,s in pairs(metals) do
-  local def = minetest.registered_craftitems[s]
-  local groups = table.copy(def.groups)
-  groups.glooptest_ingot = 1
-  minetest.override_item(s, { groups=groups })
-end
 
 -- Trade
 
@@ -39,19 +32,19 @@ local Formspec = {
 }
 
 local function trade(player, stackin, stackout)
-    local playername = player:get_player_name()
-    local inv=player:get_inventory()
-    if inv:contains_item("main", stackin) then
-      inv:remove_item("main", stackin)
-      if inv:room_for_item("main", stackout) then
-        inv:add_item("main", stackout)
-      else
-        inv:add_item("main", stackin)
-        minetest.chat_send_player(playername, "Not enough room in your inventory")
-      end
+  local playername = player:get_player_name()
+  local inv=player:get_inventory()
+  if inv:contains_item("main", stackin) then
+    inv:remove_item("main", stackin)
+    if inv:room_for_item("main", stackout) then
+      inv:add_item("main", stackout)
     else
-      minetest.chat_send_player(playername, "Not enough metal in your inventory")
+      inv:add_item("main", stackin)
+      minetest.chat_send_player(playername, "Not enough room in your inventory")
     end
+  else
+    minetest.chat_send_player(playername, "Not enough metal in your inventory")
+  end
 end
 
 
@@ -101,10 +94,10 @@ minetest.register_node("goops_exchange:counter", {
 })
 
 minetest.register_craft({
-	output = "goops_exchange:counter",
-	recipe = {
-		{"default:gold_ingot", "default:mese_crystal", "default:gold_ingot"},
-		{"default:gold_ingot", "group:glooptest_ingot", "default:gold_ingot"},
-		{"default:gold_ingot", "default:mese_crystal", "default:gold_ingot"}
-	}
+  output = "goops_exchange:counter",
+  recipe = {
+    {"default:gold_ingot", "default:mese_crystal", "default:gold_ingot"},
+    {"default:gold_ingot", "group:glooptest_ingot", "default:gold_ingot"},
+    {"default:gold_ingot", "default:mese_crystal", "default:gold_ingot"}
+  }
 })
