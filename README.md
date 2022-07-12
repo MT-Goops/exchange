@@ -4,4 +4,6 @@ This mod adds a mechanism to inject currency into a server economy, as an altern
 
 I recommend to deactivate income mechanism (in currency) and interest mechanism (in atm, if loaded).
 
-The mod adds a ``Trade counter'' node that allows to obtain minegeld from glooptest mod "rare" metals.
+The mod adds a ``Trade counter'' node that allows to obtain minegeld from "rare" metals.
+
+Glooptest mod dependency was made optional by including part of its code.
